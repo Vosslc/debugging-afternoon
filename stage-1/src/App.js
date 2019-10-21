@@ -9,15 +9,15 @@ class App extends Component {
     this.state = {
       products: [],
       cart: [],
-      showCart: false
+      showCart: false,
     };
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
     this.navigate = this.navigate.bind(this);
   }
   componentDidMount() {
-    axios
-      .get("https://practiceapi.devmountain.com/products/")
+    const axios = require('axios')
+    axios.get("https://practiceapi.devmountain.com/products/")
       .then(response => {
         this.setState({
           products: response.data
@@ -54,9 +54,12 @@ class App extends Component {
         <NavBar navigate={this.navigate} />
         <div className="main-container">
           {showCart ? (
-            <ShoppingCart cart={cart} />
+            <ShoppingCart cart={this.state.cart} 
+            removeFromCart={this.removeFromCart}/>
           ) : (
-            <StoreFront products={products} />
+            <StoreFront products={products} 
+            addToCart={this.addToCart} />
+
           )}
         </div>
       </div>
